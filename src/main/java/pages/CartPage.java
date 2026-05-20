@@ -1,0 +1,119 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.devtools.v146.domstorage.model.Item;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
+
+import java.util.List;
+
+public class CartPage {
+    private WebDriver driver;
+
+
+    public CartPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    private By inventoryList = By.className("inventory_item");
+    private By addToCartButton = By.className("btn_inventory");
+    private By shoppingCartButton = By.className("shopping_cart_link");
+    private By shoppingCartBadgeNum = By.className("shopping_cart_badge");
+    private By removeButton = By.id("remove-sauce-labs-backpack");
+    private By checkoutButton = By.id("checkout");
+    private By continueShoppingButton = By.id("continue-shopping");
+    private By itemInCartName = By.className("inventory_item_name");
+    private By priceOfItemInCart = By.className("inventory_item_price");
+    private By addToCartOneItemButton = By.id("add-to-cart");
+    private By removeSingleItemButton = By.id("remove");
+
+
+    public void addItemToCartButton(int itemIndex) {
+        List<WebElement> listOfItems = driver.findElements(inventoryList);
+
+        WebElement targetProduct = listOfItems.get(itemIndex);
+
+        targetProduct.findElement(addToCartButton).click();
+
+
+    }
+
+    public void removeItemFromCartButton(int itemIndex) {
+        List<WebElement> listOfItems = driver.findElements(inventoryList);
+
+        WebElement targetProduct = listOfItems.get(itemIndex);
+
+        targetProduct.findElement(removeButton).click();
+
+
+    }
+
+    public int getItemsCountInCart() {
+
+        return driver.findElements(itemInCartName).size();
+    }
+    public void clickOnInventoryItemName(int itemIndex){
+        driver.findElements(itemInCartName).get(itemIndex).click();
+    }
+    public void clickAddToCartSingleItemButton(){
+        driver.findElement(addToCartOneItemButton).click();
+    }
+    public void clickRemoveSingleItemButton(){
+        driver.findElement(removeSingleItemButton).click();
+    }
+    public String getColorFromRemoveButton(){
+        Color color = Color.fromString(driver.findElement(removeSingleItemButton).getCssValue("color"));
+        return color.asHex();
+    }
+
+    public void clickCartButton() {
+        driver.findElement(shoppingCartButton).click();
+    }
+
+    public void clickRemoveButton() {
+        driver.findElement(removeButton).click();
+    }
+
+    public void clickContinueShoppingButton() {
+        driver.findElement(continueShoppingButton).click();
+    }
+
+    public void clickCheckoutButton() {
+        driver.findElement(checkoutButton).click();
+    }
+
+
+    public String getItemInCartName() {
+        return driver.findElement(itemInCartName).getText();
+    }
+
+    public String getPriceOfItemInCart() {
+        String price = driver.findElement(priceOfItemInCart).getText();
+        return price.substring(1);
+    }
+
+    public String getColorOfRemoveButton() {
+        Color color = Color.fromString(driver.findElement(removeButton).getCssValue("color"));
+        return color.asHex();
+    }
+
+    public String getColorOfCheckoutButton() {
+        Color color = Color.fromString(driver.findElement(checkoutButton).getCssValue("background-color"));
+        return color.asHex();
+    }
+
+    public boolean isItemAddedToCart() {
+        try {
+
+            return driver.findElement(shoppingCartBadgeNum).isDisplayed();
+
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+
+    }
+
+}
