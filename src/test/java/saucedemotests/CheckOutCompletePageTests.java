@@ -46,7 +46,7 @@ public class CheckOutCompletePageTests {
         checkout2.clickFinishButton();
     }
     @Test
-    public void validateAllTextFieldsFromLastPage(){
+    public void validateAllTextFieldsFromThePage(){
         assertEquals("Checkout: Complete!",productpage.getPageTitle());
         assertEquals("Thank you for your order!",complete.getCompleteHeaderText());
         assertEquals("Your order has been dispatched, and will arrive just as fast as the pony can get there!",complete.getCompleteHeaderDescriptionText());
