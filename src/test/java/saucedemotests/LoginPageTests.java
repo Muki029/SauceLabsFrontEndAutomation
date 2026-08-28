@@ -1,5 +1,7 @@
 package saucedemotests;
 
+import org.openqa.selenium.chrome.ChromeOptions;
+
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
