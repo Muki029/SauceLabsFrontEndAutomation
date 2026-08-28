@@ -20,7 +20,7 @@ public class CheckOutV2PageTests {
     @BeforeEach
     public void setUp() throws InterruptedException {
         //initalize chrome driver
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions(); if (System.getenv("JENKINS_HOME") != null) { options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage"); } driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
 
