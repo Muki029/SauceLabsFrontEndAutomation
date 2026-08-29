@@ -51,33 +51,46 @@ public class HeaderTests {
 
 
     @Test
-    public void burgerButtonAllItems() throws InterruptedException {
+    public void burgerAllItemsButtonTextTest() throws InterruptedException {
+        header.clickBurgerButton();
+        Thread.sleep(2000);
+        assertEquals("All Items", header.getAllItemsButtonText());
+    }
 
+    @Test
+    public void burgerAllItemsButtonClickTest() throws InterruptedException {
         header.clickBurgerButton();
         Thread.sleep(2000);
         header.clickAllItemsButton();
-        assertEquals("All Items", header.getAllItemsButtonText());
         assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl());
     }
 
     @Test
-    public void burgerAboutButton() throws InterruptedException {
+    public void burgerAboutButtonTextTest() throws InterruptedException {
         header.clickBurgerButton();
-
         Thread.sleep(1000);
-
         assertEquals("About", header.getAboutButtonText());
+    }
+
+    @Test
+    public void burgerAboutButtonClickTest() throws InterruptedException {
+        header.clickBurgerButton();
+        Thread.sleep(1000);
         header.clickAboutButton();
-        //thread if needed here ->
         assertEquals("https://saucelabs.com/", driver.getCurrentUrl());
     }
 
     @Test
-    public void burgerLogoutButton() throws InterruptedException {
+    public void burgerLogoutButtonTextTest() throws InterruptedException {
         header.clickBurgerButton();
         Thread.sleep(3000);
-
         assertEquals("Logout", header.getLogoutButtonText());
+    }
+
+    @Test
+    public void burgerLogoutButtonClickTest() throws InterruptedException {
+        header.clickBurgerButton();
+        Thread.sleep(3000);
         header.clickLogOutButton();
 
         Thread.sleep(3000);

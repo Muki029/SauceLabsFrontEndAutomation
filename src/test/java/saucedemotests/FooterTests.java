@@ -48,9 +48,12 @@ public class FooterTests {
     }
 
     @Test
-    public void clickFooterButtonTwitterandTextunder() {
-
+    public void footerCopyrightTextTest() {
         assertEquals("© 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy", footer.footerMessage());
+    }
+
+    @Test
+    public void twitterButtonClick() {
         footer.clickTwitterbutton();
         footer.switchToNewTab();
         assertEquals("https://x.com/saucelabs", driver.getCurrentUrl());

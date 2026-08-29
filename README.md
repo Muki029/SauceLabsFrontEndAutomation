@@ -63,7 +63,7 @@ Test classes only interact with these Page Object methods — they never query t
 - **Header (`Header`)** — burger menu navigation (All Items, About, Logout, Reset App State).
 - **Footer (`Footer`)** — social links (Twitter, Facebook, LinkedIn) and footer copy text.
 
-**58 test methods** across **9 test classes**.
+**65 test methods** across **9 test classes**.
 
 ## Prerequisites
 

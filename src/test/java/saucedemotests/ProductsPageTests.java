@@ -55,19 +55,30 @@ public class ProductsPageTests {
     }
 
     @Test
-    public void orderingProductsFromHighToLowPriceTest() {
+    public void orderingDropdownShowsHighToLowPriceTest() {
         productpage.selectOrderingDropdownOption(3);
 
         assertEquals("Price (high to low)", productpage.getTextFromOrderingDropdown());
-        assertTrue(productpage.areAllProductsPricesDescending());
+    }
 
+    @Test
+    public void orderingProductsFromHighToLowPriceTest() {
+        productpage.selectOrderingDropdownOption(3);
+
+        assertTrue(productpage.areAllProductsPricesDescending());
+    }
+
+    @Test
+    public void orderingDropdownShowsLowToHighPriceTest() {
+        productpage.selectOrderingDropdownOption(2);
+
+        assertEquals("Price (low to high)", productpage.getTextFromOrderingDropdown());
     }
 
     @Test
     public void orderingProductsFromLowToHighriceTest() {
         productpage.selectOrderingDropdownOption(2);
 
-        assertEquals("Price (low to high)", productpage.getTextFromOrderingDropdown());
         assertTrue(productpage.areAllProductsPricesIncreasing());
     }
 

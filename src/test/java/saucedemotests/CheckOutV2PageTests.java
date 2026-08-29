@@ -95,9 +95,13 @@ public class CheckOutV2PageTests {
     }
 
     @Test
-    public void makeSuccesfullPurchaseValidateAndClickFinishButton(){
-        //user makes succesful purchase and is redirected to  the last page
+    public void validateFinishButtonColor(){
         assertEquals("#3ddc91", checkout2.getFinishButtonColor());
+    }
+
+    @Test
+    public void clickFinishButtonAndValidateRedirect(){
+        //user makes succesful purchase and is redirected to the last page
         checkout2.clickFinishButton();
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-complete.html"));
         assertEquals("https://www.saucedemo.com/checkout-complete.html",driver.getCurrentUrl());
