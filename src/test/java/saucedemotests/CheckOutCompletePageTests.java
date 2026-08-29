@@ -66,6 +66,10 @@ public class CheckOutCompletePageTests {
         assertEquals("Checkout: Complete!",productpage.getPageTitle());
         assertEquals("Thank you for your order!",complete.getCompleteHeaderText());
         assertEquals("Your order has been dispatched, and will arrive just as fast as the pony can get there!",complete.getCompleteHeaderDescriptionText());
+    }
+
+    @Test
+    public void validateBackHomeButtonColorAndPonyImage(){
         assertEquals("#3ddc91",complete.getBackHomeButtonColor());
         assertTrue(complete.isPonyExpressImageSpecsCorrect());
     }

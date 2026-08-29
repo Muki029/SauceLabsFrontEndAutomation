@@ -56,7 +56,7 @@ public class CartPageTests {
 
 
     @Test
-    public void chooseItemAndValidateNameandButtonColors() throws InterruptedException {
+    public void chooseItemAndValidateItemNames() throws InterruptedException {
         //because we have @Beforeeach annotation which redirect us direct on cart page,
         // we need to go back to products page first to select items
 
@@ -66,10 +66,7 @@ public class CartPageTests {
         Thread.sleep(1000);
         cartpage.clickCartButton();
         Thread.sleep(1000);
-        assertEquals("#3ddc91", cartpage.getColorOfCheckoutButton());
-        Thread.sleep(1000);
         assertEquals("Sauce Labs Backpack", cartpage.getItemInCartName());
-        assertEquals("#e2231a", cartpage.getColorOfRemoveButton());
         Thread.sleep(1000);
         cartpage.clickRemoveButton();
         Thread.sleep(1000);
@@ -79,6 +76,18 @@ public class CartPageTests {
         Thread.sleep(1000);
         cartpage.clickCartButton();
         assertEquals("Sauce Labs Bike Light", cartpage.getItemInCartName());
+    }
+
+    @Test
+    public void validateCheckoutAndRemoveButtonColors() throws InterruptedException {
+        cartpage.clickContinueShoppingButton();
+        Thread.sleep(1000);
+        cartpage.addItemToCartButton(0);
+        Thread.sleep(1000);
+        cartpage.clickCartButton();
+        Thread.sleep(1000);
+        assertEquals("#3ddc91", cartpage.getColorOfCheckoutButton());
+        assertEquals("#e2231a", cartpage.getColorOfRemoveButton());
     }
 
 

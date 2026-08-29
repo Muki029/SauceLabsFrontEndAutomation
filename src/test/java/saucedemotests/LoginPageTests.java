@@ -150,7 +150,7 @@ public class LoginPageTests {
     }
 
     @Test
-    public void loginFormInitialStateUITest() {
+    public void loginFormInitialStateFontTest() {
         assertEquals("\"DM Sans\", Arial, Helvetica, sans-serif", loginPage.getUserNameFieldFontType());
         assertEquals("14px", loginPage.getUserNameFieldFontSize());
 
@@ -159,14 +159,18 @@ public class LoginPageTests {
 
         assertEquals("\"DM Sans\", Arial, Helvetica, sans-serif", loginPage.getLoginButtonFontType());
         assertEquals("16px", loginPage.getLoginButtonFontSize());
-        assertEquals("#3ddc91", loginPage.getLoginButtonColor());
 
         loginPage.clickLogin();
         assertEquals("14px", loginPage.getErrorMessageFontSize());
         assertEquals("\"DM Sans\", Arial, Helvetica, sans-serif", loginPage.getErrorMessageFontType());
+    }
+
+    @Test
+    public void loginFormInitialStateColorTest() {
+        assertEquals("#3ddc91", loginPage.getLoginButtonColor());
+
+        loginPage.clickLogin();
         assertEquals("#e2231a", loginPage.getErrorMessageColor());
-
-
     }
 
     @AfterEach
