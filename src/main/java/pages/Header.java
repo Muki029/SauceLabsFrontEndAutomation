@@ -2,12 +2,18 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class Header {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     public Header(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     private By headerLogo = By.className("app_logo");
@@ -23,6 +29,7 @@ public class Header {
 
     public void clickBurgerButton() {
         driver.findElement(burgerButton).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(aboutButton));
     }
 
     public String getAllItemsButtonText() {

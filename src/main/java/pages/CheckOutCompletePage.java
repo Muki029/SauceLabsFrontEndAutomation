@@ -4,12 +4,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class CheckOutCompletePage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     public CheckOutCompletePage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     private By completeHeaderText = By.className("complete-header");
@@ -29,6 +35,7 @@ public class CheckOutCompletePage {
     }
     public void clickBackHomeButton(){
         driver.findElement(backHomeButton).click();
+        wait.until(ExpectedConditions.urlContains("inventory.html"));
     }
     public boolean isPonyExpressImageSpecsCorrect() {
 

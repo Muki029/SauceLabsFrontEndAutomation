@@ -7,10 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.CartPage;
 import pages.CheckOutPage;
 import pages.LoginPage;
 import pages.ProductsPage;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +29,7 @@ public class CheckOutPageTests {
     @BeforeEach
     public void setUp() throws InterruptedException {
         //initalize chrome driver
-        ChromeOptions options = new ChromeOptions(); if (System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_URL") != null) { options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage"); } driver = new ChromeDriver(options);
+        ChromeOptions options = new ChromeOptions(); if (System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_URL") != null) { options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--window-size=1920,1080"); } driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
 
@@ -112,6 +116,7 @@ public class CheckOutPageTests {
     public void sucessfullyProceedToNextPage(){
         checkout.enterAllUserDataSucess();
         checkout.clickContinueButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
         assertEquals("https://www.saucedemo.com/checkout-step-two.html",driver.getCurrentUrl());
     }
 

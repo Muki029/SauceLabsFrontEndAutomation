@@ -7,15 +7,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.devtools.v146.domstorage.model.Item;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class CartPage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     private By inventoryList = By.className("inventory_item");
@@ -71,6 +76,7 @@ public class CartPage {
 
     public void clickCartButton() {
         driver.findElement(shoppingCartButton).click();
+        wait.until(ExpectedConditions.urlContains("cart.html"));
     }
 
     public void clickRemoveButton() {
@@ -79,10 +85,12 @@ public class CartPage {
 
     public void clickContinueShoppingButton() {
         driver.findElement(continueShoppingButton).click();
+        wait.until(ExpectedConditions.urlContains("inventory.html"));
     }
 
     public void clickCheckoutButton() {
         driver.findElement(checkoutButton).click();
+        wait.until(ExpectedConditions.urlContains("checkout-step-one.html"));
     }
 
 

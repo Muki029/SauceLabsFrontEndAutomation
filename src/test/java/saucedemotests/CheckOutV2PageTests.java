@@ -7,7 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,7 +26,7 @@ public class CheckOutV2PageTests {
     @BeforeEach
     public void setUp() throws InterruptedException {
         //initalize chrome driver
-        ChromeOptions options = new ChromeOptions(); if (System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_URL") != null) { options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage"); } driver = new ChromeDriver(options);
+        ChromeOptions options = new ChromeOptions(); if (System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_URL") != null) { options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--window-size=1920,1080"); } driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
 
@@ -42,6 +46,7 @@ public class CheckOutV2PageTests {
         cartpage.clickCheckoutButton();
         checkout.enterAllUserDataSucess();
         checkout.clickContinueButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
     }
 
     @Test
@@ -95,6 +100,7 @@ public class CheckOutV2PageTests {
         cartpage.clickCheckoutButton();
         checkout.enterAllUserDataSucess();
         checkout.clickContinueButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
 
         assertEquals("https://www.saucedemo.com/checkout-step-two.html", driver.getCurrentUrl());
         assertEquals(9.99, checkout2.getItemTotalPricewithoutTax());
@@ -116,6 +122,7 @@ public class CheckOutV2PageTests {
         cartpage.clickCheckoutButton();
         checkout.enterAllUserDataSucess();
         checkout.clickContinueButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
 
         assertEquals(75.97, checkout2.getItemTotalPricewithoutTax());
         assertEquals(6.08, checkout2.getOnlyTaxPriceFromItems());
@@ -133,6 +140,7 @@ public class CheckOutV2PageTests {
         cartpage.clickCheckoutButton();
         checkout.enterAllUserDataSucess();
         checkout.clickContinueButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
 
         assertEquals("Sauce Labs Bike Light", checkout2.getInventoryItemName(0));
         assertEquals("A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included.", checkout2.getInventoryItemDescription(0));
@@ -145,6 +153,7 @@ public class CheckOutV2PageTests {
         //user makes succesful purchase and is redirected to  the last page
         assertEquals("#3ddc91", checkout2.getFinishButtonColor());
         checkout2.clickFinishButton();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-complete.html"));
         assertEquals("https://www.saucedemo.com/checkout-complete.html",driver.getCurrentUrl());
     }
 

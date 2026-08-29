@@ -5,8 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,11 +18,13 @@ public class ProductsPage {
     private WebDriver driver;
     private Actions actions;
     private Header header;
+    private WebDriverWait wait;
 
 
     public ProductsPage(WebDriver driver) {
         this.driver = driver;
         this.actions = new Actions(driver);
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     private By productsTitle = By.className("title");
@@ -126,6 +131,7 @@ public class ProductsPage {
 
     public void clickBurgerButton() {
         driver.findElement(burgerButton).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(burgerButtonList));
     }
 
     public List<String> getBurgerMenuColorsOnHover() {

@@ -2,14 +2,18 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class Footer {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     public Footer(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     By twitterButton = By.className("social_twitter");
@@ -19,6 +23,7 @@ public class Footer {
 
 
     public void switchToNewTab() {
+        wait.until(d -> d.getWindowHandles().size() > 1);
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
     }

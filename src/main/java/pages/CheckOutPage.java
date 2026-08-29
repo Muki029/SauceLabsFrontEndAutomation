@@ -4,12 +4,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class CheckOutPage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     public CheckOutPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
 
@@ -45,6 +51,7 @@ public class CheckOutPage {
 
     public void clickCancelButton() {
         driver.findElement(cancelButton).click();
+        wait.until(ExpectedConditions.urlContains("cart.html"));
     }
 
     public String getErrormessageText() {
