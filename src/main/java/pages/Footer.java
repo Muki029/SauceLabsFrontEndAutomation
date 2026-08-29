@@ -16,9 +16,9 @@ public class Footer {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    By twitterButton = By.className("social_twitter");
-    By facebookButton = By.className("social_facebook");
-    By linkedInButton = By.className("social_linkedin");
+    By twitterButton = By.cssSelector(".social_twitter a");
+    By facebookButton = By.cssSelector(".social_facebook a");
+    By linkedInButton = By.cssSelector(".social_linkedin a");
     By footerMessage = By.className("footer_copy");
 
 
@@ -29,15 +29,15 @@ public class Footer {
     }
 
     public void clickTwitterbutton() {
-        driver.findElement(twitterButton).click();
+        ClickUtil.click(driver, driver.findElement(twitterButton));
     }
 
     public void clickFacebookButton() {
-        driver.findElement(facebookButton).click();
+        ClickUtil.click(driver, driver.findElement(facebookButton));
     }
 
     public void clickLinkedInButton() {
-        driver.findElement(linkedInButton).click();
+        ClickUtil.click(driver, driver.findElement(linkedInButton));
     }
 
     public String footerMessage() {

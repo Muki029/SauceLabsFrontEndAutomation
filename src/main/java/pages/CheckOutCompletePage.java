@@ -34,7 +34,7 @@ public class CheckOutCompletePage {
         return color.asHex();
     }
     public void clickBackHomeButton(){
-        driver.findElement(backHomeButton).click();
+        ClickUtil.click(driver, driver.findElement(backHomeButton));
         wait.until(ExpectedConditions.urlContains("inventory.html"));
     }
     public boolean isPonyExpressImageSpecsCorrect() {

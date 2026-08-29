@@ -28,7 +28,7 @@ public class Header {
     }
 
     public void clickBurgerButton() {
-        driver.findElement(burgerButton).click();
+        ClickUtil.click(driver, driver.findElement(burgerButton));
         wait.until(ExpectedConditions.visibilityOfElementLocated(aboutButton));
     }
 
@@ -37,11 +37,11 @@ public class Header {
     }
 
     public void clickAllItemsButton() {
-        driver.findElement(allItemsButton).click();
+        ClickUtil.click(driver, driver.findElement(allItemsButton));
     }
 
     public void clickAboutButton() {
-        driver.findElement(aboutButton).click();
+        ClickUtil.click(driver, driver.findElement(aboutButton));
     }
 
     public String getAboutButtonText() {
@@ -49,7 +49,7 @@ public class Header {
     }
 
     public void clickLogOutButton() {
-        driver.findElement(logOutButton).click();
+        ClickUtil.click(driver, driver.findElement(logOutButton));
 
     }
 
@@ -58,7 +58,7 @@ public class Header {
     }
 
     public void clickResetAppState() {
-        driver.findElement(resetAppState).click();
+        ClickUtil.click(driver, driver.findElement(resetAppState));
     }
 
     public String getResetAppStateText() {

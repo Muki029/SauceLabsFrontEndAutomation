@@ -28,29 +28,29 @@ public class CheckOutPage {
     private By XerrorButton = By.className("error-button");
 
     public void enterFirstname(String Firstname) {
-        driver.findElement(firstNameField).sendKeys(Firstname);
+        ClickUtil.type(driver, driver.findElement(firstNameField), Firstname);
     }
 
     public void enterLastname(String Lastname) {
-        driver.findElement(lastNameField).sendKeys(Lastname);
+        ClickUtil.type(driver, driver.findElement(lastNameField), Lastname);
     }
 
     public void enterZipPostalCode(String zipCode) {
-        driver.findElement(zipPostalCode).sendKeys(zipCode);
+        ClickUtil.type(driver, driver.findElement(zipPostalCode), zipCode);
     }
 
     public void enterAllUserDataSucess() {
-        driver.findElement(firstNameField).sendKeys("Muhamed");
-        driver.findElement(lastNameField).sendKeys("Mavmudoski");
-        driver.findElement(zipPostalCode).sendKeys("5020");
+        ClickUtil.type(driver, driver.findElement(firstNameField), "Muhamed");
+        ClickUtil.type(driver, driver.findElement(lastNameField), "Mavmudoski");
+        ClickUtil.type(driver, driver.findElement(zipPostalCode), "5020");
     }
 
     public void clickContinueButton() {
-        driver.findElement(continueButton).click();
+        ClickUtil.click(driver, driver.findElement(continueButton));
     }
 
     public void clickCancelButton() {
-        driver.findElement(cancelButton).click();
+        ClickUtil.click(driver, driver.findElement(cancelButton));
         wait.until(ExpectedConditions.urlContains("cart.html"));
     }
 
@@ -85,6 +85,6 @@ public class CheckOutPage {
     }
 
     public void clickXonerrorButton(){
-        driver.findElement(XerrorButton).click();
+        ClickUtil.click(driver, driver.findElement(XerrorButton));
     }
 }

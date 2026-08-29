@@ -130,7 +130,7 @@ public class ProductsPage {
     }
 
     public void clickBurgerButton() {
-        driver.findElement(burgerButton).click();
+        ClickUtil.click(driver, driver.findElement(burgerButton));
         wait.until(ExpectedConditions.visibilityOfElementLocated(burgerButtonList));
     }
 

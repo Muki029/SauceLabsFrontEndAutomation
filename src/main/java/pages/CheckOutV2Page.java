@@ -65,7 +65,7 @@ public class CheckOutV2Page {
     }
 
     public void clickCancelButton() {
-        driver.findElement(cancelButton).click();
+        ClickUtil.click(driver, driver.findElement(cancelButton));
         wait.until(ExpectedConditions.urlContains("inventory.html"));
     }
 
@@ -91,7 +91,7 @@ public class CheckOutV2Page {
     }
 
     public void clickFinishButton() {
-        driver.findElement(finishButton).click();
+        ClickUtil.click(driver, driver.findElement(finishButton));
     }
 
     public String getPricetext() {

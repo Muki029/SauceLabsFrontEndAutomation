@@ -41,7 +41,7 @@ public class CartPage {
 
         WebElement targetProduct = listOfItems.get(itemIndex);
 
-        targetProduct.findElement(addToCartButton).click();
+        ClickUtil.click(driver, targetProduct.findElement(addToCartButton));
 
 
     }
@@ -51,7 +51,7 @@ public class CartPage {
 
         WebElement targetProduct = listOfItems.get(itemIndex);
 
-        targetProduct.findElement(removeButton).click();
+        ClickUtil.click(driver, targetProduct.findElement(removeButton));
 
 
     }
@@ -61,13 +61,13 @@ public class CartPage {
         return driver.findElements(itemInCartName).size();
     }
     public void clickOnInventoryItemName(int itemIndex){
-        driver.findElements(itemInCartName).get(itemIndex).click();
+        ClickUtil.click(driver, driver.findElements(itemInCartName).get(itemIndex));
     }
     public void clickAddToCartSingleItemButton(){
-        driver.findElement(addToCartOneItemButton).click();
+        ClickUtil.click(driver, driver.findElement(addToCartOneItemButton));
     }
     public void clickRemoveSingleItemButton(){
-        driver.findElement(removeSingleItemButton).click();
+        ClickUtil.click(driver, driver.findElement(removeSingleItemButton));
     }
     public String getColorFromRemoveButton(){
         Color color = Color.fromString(driver.findElement(removeSingleItemButton).getCssValue("color"));
@@ -75,21 +75,21 @@ public class CartPage {
     }
 
     public void clickCartButton() {
-        driver.findElement(shoppingCartButton).click();
+        ClickUtil.click(driver, driver.findElement(shoppingCartButton));
         wait.until(ExpectedConditions.urlContains("cart.html"));
     }
 
     public void clickRemoveButton() {
-        driver.findElement(removeButton).click();
+        ClickUtil.click(driver, driver.findElement(removeButton));
     }
 
     public void clickContinueShoppingButton() {
-        driver.findElement(continueShoppingButton).click();
+        ClickUtil.click(driver, driver.findElement(continueShoppingButton));
         wait.until(ExpectedConditions.urlContains("inventory.html"));
     }
 
     public void clickCheckoutButton() {
-        driver.findElement(checkoutButton).click();
+        ClickUtil.click(driver, driver.findElement(checkoutButton));
         wait.until(ExpectedConditions.urlContains("checkout-step-one.html"));
     }
 

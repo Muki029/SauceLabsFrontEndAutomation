@@ -48,7 +48,7 @@ public class LoginPage {
     }
 
     public void clickLogin() {
-        driver.findElement(loginButton).click();
+        ClickUtil.click(driver, driver.findElement(loginButton));
     }
 
     public String GetErrorMessage() {
@@ -56,7 +56,7 @@ public class LoginPage {
     }
 
     public void clickErrorMessageXButton() {
-        driver.findElement(errorMessageButtonX).click();
+        ClickUtil.click(driver, driver.findElement(errorMessageButtonX));
     }
 
     public Boolean isErrorMessageDisplayed() {
