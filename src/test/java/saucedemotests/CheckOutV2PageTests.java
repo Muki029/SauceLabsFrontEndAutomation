@@ -95,67 +95,6 @@ public class CheckOutV2PageTests {
     }
 
     @Test
-    public void removeItemChangeforAnother() throws InterruptedException {
-        checkout2.clickCancelButton();
-        Thread.sleep(1000);
-
-        cartpage.removeItemFromCartButton(0);
-        cartpage.addItemToCartButton(1);
-        cartpage.clickCartButton();
-
-        Thread.sleep(1000);
-        cartpage.clickCheckoutButton();
-        checkout.enterAllUserDataSucess();
-        checkout.clickContinueButton();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
-
-        assertEquals("https://www.saucedemo.com/checkout-step-two.html", driver.getCurrentUrl());
-        assertEquals(9.99, checkout2.getItemTotalPricewithoutTax());
-        assertEquals(0.80, checkout2.getOnlyTaxPriceFromItems());
-        assertEquals(10.79, checkout2.calculateTotalPriceWithTax(), 0.1);
-    }
-
-    @Test
-    public void addMoreItemsandCalculateThemTogether() throws InterruptedException {
-        checkout2.clickCancelButton();
-
-
-        cartpage.removeItemFromCartButton(0);
-        cartpage.addItemToCartButton(1);
-        cartpage.addItemToCartButton(2);
-        cartpage.addItemToCartButton(3);
-        cartpage.clickCartButton();
-
-        cartpage.clickCheckoutButton();
-        checkout.enterAllUserDataSucess();
-        checkout.clickContinueButton();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
-
-        assertEquals(75.97, checkout2.getItemTotalPricewithoutTax());
-        assertEquals(6.08, checkout2.getOnlyTaxPriceFromItems());
-        assertEquals(82.05, checkout2.calculateTotalPriceWithTax());
-
-    }
-
-    @Test
-    public void getInventoryItemsNamesAndDescriptionTest() {
-        checkout2.clickCancelButton();
-        cartpage.removeItemFromCartButton(0);
-        cartpage.addItemToCartButton(1);
-        cartpage.addItemToCartButton(2);
-        cartpage.clickCartButton();
-        cartpage.clickCheckoutButton();
-        checkout.enterAllUserDataSucess();
-        checkout.clickContinueButton();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlContains("checkout-step-two.html"));
-
-        assertEquals("Sauce Labs Bike Light", checkout2.getInventoryItemName(0));
-        assertEquals("A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included.", checkout2.getInventoryItemDescription(0));
-        assertEquals("Sauce Labs Bolt T-Shirt", checkout2.getInventoryItemName(1));
-        assertEquals("Get your testing superhero on with the Sauce Labs bolt T-shirt. From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.", checkout2.getInventoryItemDescription(1));
-
-    }
-    @Test
     public void makeSuccesfullPurchaseValidateAndClickFinishButton(){
         //user makes succesful purchase and is redirected to  the last page
         assertEquals("#3ddc91", checkout2.getFinishButtonColor());

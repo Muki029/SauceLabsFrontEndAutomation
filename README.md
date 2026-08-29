@@ -10,7 +10,7 @@ The suite covers the full shopping flow of the SauceDemo application — login, 
 |---|---|
 | Java | Programming language |
 | Maven | Build tool & dependency management |
-| Selenium WebDriver 4.44.0 | Browser automation |
+| Selenium WebDriver 4.47.0 | Browser automation |
 | JUnit 5 (Jupiter) | Test framework (`@Test`, `@ParameterizedTest`, `@BeforeEach`, `@AfterEach`) |
 | JUnit 4 | Legacy assertion support (`org.junit.Assert`) used in some tests |
 | ChromeDriver | Browser driver used to run tests in Google Chrome |
@@ -29,7 +29,8 @@ FrontEndAutomation/
     │   ├── CheckOutV2Page.java              # Checkout step two (order overview) - V2 flow
     │   ├── CheckOutCompletePage.java        # Order confirmation page
     │   ├── Header.java                      # App header / burger menu navigation
-    │   └── Footer.java                      # Footer links (Twitter, Facebook, LinkedIn)
+    │   ├── Footer.java                      # Footer links (Twitter, Facebook, LinkedIn)
+    │   └── ClickUtil.java                   # Small helper used for clicks/typing (see CI/CD section below)
     └── test/java/
         ├── CartPageTests.java               # Cart page test cases
         └── saucedemotests/
@@ -37,6 +38,7 @@ FrontEndAutomation/
             ├── ProductsPageTests.java       # Product listing & sorting tests
             ├── CheckOutPageTests.java       # Checkout step one tests
             ├── CheckOutV2PageTests.java     # Checkout step two tests
+            ├── CheckOutV2ItemChangeTests.java # Checkout step two tests where the cart is changed mid-test
             ├── CheckOutCompletePageTests.java # Order confirmation tests
             ├── HeaderTests.java             # Header/navigation tests
             └── FooterTests.java             # Footer link tests
@@ -61,11 +63,11 @@ Test classes only interact with these Page Object methods — they never query t
 - **Header (`Header`)** — burger menu navigation (All Items, About, Logout, Reset App State).
 - **Footer (`Footer`)** — social links (Twitter, Facebook, LinkedIn) and footer copy text.
 
-**57 test methods** across **8 test classes**.
+**55 test methods** across **9 test classes**.
 
 ## Prerequisites
 
-- **JDK 11+** (or a compatible JDK for Selenium 4.44.0 / JUnit 5.12.2)
+- **JDK 11+** (or a compatible JDK for Selenium 4.47.0 / JUnit 5.12.2)
 - **Maven** 3.6+
 - **Google Chrome** installed (tests run against `ChromeDriver`)
 - Internet access — tests run against the live demo site `https://www.saucedemo.com/`
@@ -109,11 +111,30 @@ mvn test -Dtest=LoginPageTests#successfulLoginTest
 
 Each test class opens a fresh Chrome browser window before every test (`@BeforeEach`) and closes it afterward (`@AfterEach`), so tests are fully independent of one another.
 
+## CI/CD (Jenkins)
+
+This project runs automatically in a **Jenkins** job every time changes are pushed to `main`. Jenkins basically does the same thing you'd do manually — pull the latest code, run `mvn clean test` — just automatically, so you find out right away if something got broken instead of noticing it later.
+
+The Jenkins job:
+1. Checks out the repo from GitHub.
+2. Runs `mvn clean test`.
+3. Marks the build green ✅ or red ❌ depending on whether the tests passed.
+
+**Headless mode.** Jenkins doesn't have a real screen attached, so Chrome can't open a visible window there like it does on a laptop. The `setUp()` method in every test class checks for `BUILD_NUMBER`/`JENKINS_URL` (env vars Jenkins sets automatically) and if it's running in CI, it launches Chrome in **headless** mode instead (`--headless=new`), which just means Chrome runs without actually showing a window on screen. Locally (in IntelliJ, for example) those env vars aren't set, so you still get the normal visible browser.
+
+```java
+boolean isCi = System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_URL") != null;
+```
+
+**A couple of headless quirks I ran into while setting this up**, in case they're useful to someone else:
+- Headless Chrome (at least in this environment) sometimes doesn't register a plain WebDriver `.click()`/`.sendKeys()` the same way a normal browser would — the page just silently doesn't react. `ClickUtil.java` works around this by firing the click / setting the input value through JavaScript instead, which is more reliable in headless mode.
+- CSS `:hover` states (used in a few of the styling tests, like the product title turning green on hover) can't really be simulated in headless mode — there's no real cursor, so the browser never enters a real "hovering" state. Those specific tests are skipped automatically when running on Jenkins (`@DisabledIfEnvironmentVariable`), but still run normally when you run the suite locally.
+
 ## Notes
 
-- Tests run **headed** (a visible Chrome window) by default via `new ChromeDriver()`.
-- Some tests use `Thread.sleep()` to wait for animations/popups to settle before interacting with elements.
-- `LoginPage.pressSpacebar()` uses `java.awt.Robot` to dismiss a native browser permission popup that can appear on login — this only works in an environment with an active display/desktop session.
+- Tests run **headed** (a visible Chrome window) locally, and automatically switch to **headless** mode in Jenkins (see CI/CD section above).
+- Some tests use `Thread.sleep()` / `WebDriverWait` to wait for animations/popups/navigation to settle before interacting with elements.
+- `LoginPage.pressSpacebar()` uses `java.awt.Robot` to dismiss a native browser permission popup that can appear on login — this only works in an environment with an active display/desktop session, so it's a no-op in headless CI.
 
 ## Author
 
