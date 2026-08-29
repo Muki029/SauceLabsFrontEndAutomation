@@ -25,8 +25,15 @@ public class LoginPageTests {
     @BeforeEach
     public void setUp() {
         //initalize chrome driver
-        ChromeOptions options = new ChromeOptions(); if (System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_URL") != null) { options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--window-size=1920,1080"); } driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+        boolean isCi = System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_URL") != null;
+        ChromeOptions options = new ChromeOptions();
+        if (isCi) {
+            options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--window-size=1920,1080");
+        }
+        driver = new ChromeDriver(options);
+        if (!isCi) {
+            driver.manage().window().maximize();
+        }
         driver.get("https://www.saucedemo.com/");
 
         loginPage = new LoginPage(driver);
