@@ -130,6 +130,15 @@ boolean isCi = System.getenv("BUILD_NUMBER") != null || System.getenv("JENKINS_U
 - Headless Chrome (at least in this environment) sometimes doesn't register a plain WebDriver `.click()`/`.sendKeys()` the same way a normal browser would — the page just silently doesn't react. `ClickUtil.java` works around this by firing the click / setting the input value through JavaScript instead, which is more reliable in headless mode.
 - CSS `:hover` states (used in a few of the styling tests, like the product title turning green on hover) can't really be simulated in headless mode — there's no real cursor, so the browser never enters a real "hovering" state. Those specific tests are skipped automatically when running on Jenkins (`@DisabledIfEnvironmentVariable`), but still run normally when you run the suite locally.
 
+**Running Jenkins itself in Docker.** Since Chrome needs to actually run inside the Jenkins container for the headless tests to work, the plain `jenkins/jenkins:lts` image isn't enough — it doesn't ship with Chrome or Maven. `Dockerfile.jenkins` in the repo root builds a Jenkins image with both installed on top of the official image:
+
+```bash
+docker build -t jenkins-saucelabs -f Dockerfile.jenkins .
+docker run -d -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home --name jenkins jenkins-saucelabs
+```
+
+Then in Jenkins: create a **Pipeline** job pointing at this repo, with "Pipeline script from SCM" set to this repo's `Jenkinsfile`. The `Jenkinsfile` also expects a Maven installation named `Maven` under *Manage Jenkins → Tools* — add one there (any recent Maven version, auto-install is fine).
+
 ## Notes
 
 - Tests run **headed** (a visible Chrome window) locally, and automatically switch to **headless** mode in Jenkins (see CI/CD section above).
